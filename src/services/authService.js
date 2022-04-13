@@ -32,7 +32,7 @@ export default class AuthService {
 
     signinRedirectCallback = () => {
         this.UserManager.signinRedirectCallback().then(() => {
-            window.location.replace("/dashboard");
+            window.location.replace("/actions");
         });
     };
 

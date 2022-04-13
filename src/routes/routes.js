@@ -8,7 +8,7 @@ import { LogoutCallback } from "../components/auth/logoutCallback";
 import { PrivateRoute } from "./privateRoute";
 import { SilentRenew } from "../components/auth/silentRenew";
 import { PublicPage } from "../components/publicPage"
-import { PrivatePage } from "../components/privatePage"
+import { ActionsContainer } from "../components/actionsContainer"
 
 
 export const UrlRoutes = (
@@ -17,10 +17,11 @@ export const UrlRoutes = (
         <Route exact={true} path="/logout" element={<Logout />} />
         <Route exact={true} path="/logout/callback" element={<LogoutCallback />} />
         <Route exact={true} path="/silentrenew" element={<SilentRenew />} />
-        <Route path="/dashboard" element={
+        <Route path="/actions" element={
             <PrivateRoute>
-                <PrivatePage />
-            </PrivateRoute>} />
+                <ActionsContainer />
+            </PrivateRoute>} 
+            />
         <Route path="/" element={<PublicPage />} />
     </Routes>
 );
