@@ -10,6 +10,7 @@ import { SilentRenew } from "../components/auth/silentRenew";
 import { PublicPage } from "../components/publicPage"
 import { ActionsContainer } from "../components/actionsContainer"
 import { ActionForm } from "../components/actionForms/action1Form";
+import { ActionFormContainer } from "../components/actionForms/actionFormContainer";
 
 
 export const UrlRoutes = (
@@ -25,7 +26,12 @@ export const UrlRoutes = (
         />
         <Route path="/start-blueprint" element={
             <PrivateRoute>
-                <ActionForm />
+                <ActionFormContainer />
+            </PrivateRoute>}
+        />
+        <Route path="/action/:id" element={
+            <PrivateRoute>
+                <ActionFormContainer />
             </PrivateRoute>}
         />
         <Route path="/" element={<PublicPage />} />

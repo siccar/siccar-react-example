@@ -1,36 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../providers/authProvider";
 
-export const ActionForm = () => {
+export const ActionForm = (props) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [actionCondition, setActionCondition] = useState("false");
-  const [action, setAction] = useState();
-
-  const AuthService = useContext(AuthContext);
-
-  useEffect(() => {
-    const fetchActions = async () => {
-      var user = await AuthService.getUser()
-      const token = user.access_token
-      const defaultOptions = {
-        headers: {
-          'Authorization': "Bearer " + token
-        },
-      }
-      var response = await fetch(`${process.env.REACT_APP_SICCAR_PUBLIC_URL}/api/Actions/${process.env.REACT_APP_SICCAR_WALLET_ADDRESS}/${process.env.REACT_APP_SICCAR_REGISTER_ID}/${process.env.REACT_APP_SICCAR_BLUEPRINT_TX_ID}`,
-        defaultOptions)
-      if (response.status === 200) {
-        var json = await response.json()
-        console.log(json)
-        setAction(json)
-      }
-      console.log(response)
-    };
-
-    fetchActions();
-  }, [AuthService]);
-
+  const {action } = props;
   const formSubmit = (event) => {
     event.preventDefault();
     // We will change this to submit the payload data.. First we need to update the submit enpoint to only take the payload and supporting data.
