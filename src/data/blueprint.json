@@ -1,0 +1,184 @@
+{
+  "id": "C65F6542-3DFE-4154-908B-59D31FB760E5",
+  "title": "Simple Blueprint",
+  "description": "A basic blueprint to exercise functionality",
+  "version": 1,
+  "dataSchemas": [
+  ],
+  "participants": [
+    {
+      "walletAddress": "ws1jj7sptu0tpatl9djd9jw8fc04waxexl9eyqvqh2y250796vekdagqxsqjc0",
+      "name": "Sender",
+      "organisation": "Applicant",
+      "id": "3e380f95-1fcb-4ec5-9fed-2643da291c1c",
+      "useStealthAddress": false
+    },
+    {
+      "walletAddress": "ws1jksgpmhe8vcxhfx5ej4fhwyz7e4zzp4zw6er2russ4kwakzmt72eskqp38c",
+      "name": "Recipient",
+      "organisation": "Org",
+      "id": "9f43103d-5e5e-4ec6-9cdd-c3750af835d8",
+      "useStealthAddress": false
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "title": "First Action",
+      "previousTxId": "000000000000000000000000000000000",
+      "blueprint": "C65F6542-3DFE-4154-908B-59D31FB760E5",
+      "sender": "3e380f95-1fcb-4ec5-9fed-2643da291c1c",
+      "disclosures": [
+        {
+          "participantAddress": "9f43103d-5e5e-4ec6-9cdd-c3750af835d8",
+          "dataPointers": [
+            "name",
+            "surname",
+            "actioncondition"
+          ]
+        },
+        {
+          "participantAddress": "TrackingData",
+          "dataPointers": [
+            "name"
+          ]
+        }
+      ],
+      "condition": {
+        "if": [
+          {
+            "==": [
+              {
+                "var": "actioncondition"
+              },
+              "true"
+            ]
+          },
+          2,
+          {
+            "==": [
+              {
+                "var": "actioncondition"
+              },
+              "false"
+            ]
+          },
+          -1
+        ]
+      },
+      "dataSchemas": [
+        {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "$id": "https://siccar.net/schema/SimpleSend.json",
+          "type": "object",
+          "title": "Simple Data",
+          "description": "A Simple Data item between participants",
+          "properties": {
+            "name": {
+              "$id": "name",
+              "type": "string",
+              "title": "First Name",
+              "description": "The applicants first name."
+            },
+            "surname": {
+              "$id": "surname",
+              "type": "string",
+              "title": "Surname",
+              "description": "The applicants surname"
+            },
+            "actioncondition": {
+              "$id": "actioncondition",
+              "title": "Action Condition",
+              "description": "Source of data for the action condition",
+              "type": "boolean"
+            }
+          }
+        }
+      ],
+      "form": {
+        "type": "Layout",
+        "layout": "Group",
+        "scope": "$",
+        "elements": [
+          {
+            "type": "Layout",
+            "layout": "VerticalLayout",
+            "elements": [
+              {
+                "type": "TextLine",
+                "scope": "$.properties.name",
+                "layout": "VerticalLayout"
+              },
+              {
+                "type": "Numeric",
+                "scope": "$.properties.surname",
+                "layout": "VerticalLayout"
+              },
+              {
+                "type": "Checkbox",
+                "scope": "$.properties.actioncondition",
+                "layout": "VerticalLayout"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "title": "Second Action",
+      "previousTxId": "000000000000000000000000000000000",
+      "blueprint": "C65F6542-3DFE-4154-908B-59D31FB760E5",
+      "sender": "9f43103d-5e5e-4ec6-9cdd-c3750af835d8",
+      "disclosures": [
+        {
+          "participantAddress": "3e380f95-1fcb-4ec5-9fed-2643da291c1c",
+          "dataPointers": [
+            "validate"
+          ]
+        },
+        {
+          "participantAddress": "TrackingData",
+          "dataPointers": [
+            "validate"
+          ]
+        }
+      ],
+      "dataSchemas": [
+        {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "$id": "https://siccar.net/schema/C65F6542-3DFE-4154-908B-59D31FB760E5/1.json",
+          "type": "object",
+          "title": "Validate applicant",
+          "description": "The data set which is used for the validator",
+          "properties": {
+            "validate": {
+              "$id": "validate",
+              "type": "boolean",
+              "title": "Validate Applicant",
+              "description": "Respond with true or false to validate the applicant"
+            }
+          }
+        }
+      ],
+      "form": {
+        "type": "Layout",
+        "layout": "Group",
+        "scope": "$",
+        "elements": [
+          {
+            "type": "Layout",
+            "layout": "VerticalLayout",
+            "elements": [
+              {
+                "type": "Checkbox",
+                "scope": "$.properties.validate",
+                "layout": "VerticalLayout"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import { PrivateRoute } from "./privateRoute";
 import { SilentRenew } from "../components/auth/silentRenew";
 import { PublicPage } from "../components/publicPage"
 import { ActionsContainer } from "../components/actionsContainer"
+import { ActionForm } from "../components/actionForms/action1Form";
 
 
 export const UrlRoutes = (
@@ -20,8 +21,13 @@ export const UrlRoutes = (
         <Route path="/actions" element={
             <PrivateRoute>
                 <ActionsContainer />
-            </PrivateRoute>} 
-            />
+            </PrivateRoute>}
+        />
+        <Route path="/start-blueprint" element={
+            <PrivateRoute>
+                <ActionForm />
+            </PrivateRoute>}
+        />
         <Route path="/" element={<PublicPage />} />
     </Routes>
 );
