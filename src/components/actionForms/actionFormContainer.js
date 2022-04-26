@@ -4,11 +4,11 @@ import { AuthContext } from "../../providers/authProvider";
 import { ActionForm } from "./action1Form";
 
 export const ActionFormContainer = (params) => {
-  const [action, setAction] = useState({id: null});
+  const [action, setAction] = useState({ id: null });
 
   const AuthService = useContext(AuthContext);
   var { id } = useParams();
-  if(id === undefined){
+  if (id === undefined) {
     // Replace the id with the predefined blueprint Id to get the first action.
     id = process.env.REACT_APP_SICCAR_BLUEPRINT_TX_ID
   }
@@ -37,7 +37,7 @@ export const ActionFormContainer = (params) => {
 
   switch (action.id) {
     case 1:
-      return <ActionForm action={action}/>
+      return <ActionForm action={action} />
     case 2:
       //2nd action form goes here
       break
