@@ -29,12 +29,12 @@ export const ActionsContainer = () => {
    }, [AuthService]);
 
    const renderActions = actions.map(action => {
-      return (<div>Action Title: {action.title}</div>)
+      return (<li key={action.previousTxId}>Action Title: {action.title}</li>)
    })
 
    return (
       <>
-      {actions.length === 0 ? <h2>No Actions Availiable</h2> : renderActions}
+      {actions.length === 0 ? <h2>No Actions Availiable</h2> : <ul>{renderActions}</ul>}
       </>
    );
 };

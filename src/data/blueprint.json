@@ -130,6 +130,7 @@
       "previousTxId": "000000000000000000000000000000000",
       "blueprint": "C65F6542-3DFE-4154-908B-59D31FB760E5",
       "sender": "9f43103d-5e5e-4ec6-9cdd-c3750af835d8",
+      "condition": null,
       "disclosures": [
         {
           "participantAddress": "3e380f95-1fcb-4ec5-9fed-2643da291c1c",

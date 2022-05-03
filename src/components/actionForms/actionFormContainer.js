@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../providers/authProvider";
 import { ActionForm } from "./action1Form";
+import { ActionForm2 } from "./action2Form";
 
 export const ActionFormContainer = (params) => {
   const [action, setAction] = useState({ id: null });
@@ -40,7 +41,7 @@ export const ActionFormContainer = (params) => {
     var user = await AuthService.getUser()
     const token = user.access_token
     const submitActionPayload = {
-      "previousTxId": id ? id : process.env.REACT_APP_SICCAR_BLUEPRINT_TX_ID,
+      "previousTxId": action.previousTxId,
       "blueprintId": process.env.REACT_APP_SICCAR_BLUEPRINT_TX_ID,
       "walletAddress": process.env.REACT_APP_SICCAR_WALLET_ADDRESS,
       "registerId": process.env.REACT_APP_SICCAR_REGISTER_ID,
@@ -69,8 +70,7 @@ export const ActionFormContainer = (params) => {
     case 1:
       return <ActionForm action={action} submitActionCallback={submitAction} />
     case 2:
-      //2nd action form goes here
-      break
+      return <ActionForm2 action={action} submitActionCallback={submitAction} />
 
     default:
       return <h3>No form exists for action {action.id}</h3>
