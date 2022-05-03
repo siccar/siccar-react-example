@@ -5,6 +5,7 @@ import { ActionForm } from "./action1Form";
 
 export const ActionFormContainer = (params) => {
   const [action, setAction] = useState({ id: null });
+  const [actionSubmitted, setActionSubmitted] = useState(false);
 
   const AuthService = useContext(AuthContext);
   var { id } = useParams();
@@ -35,9 +36,38 @@ export const ActionFormContainer = (params) => {
     fetchAction();
   }, [AuthService, id]);
 
+  const submitAction = async (payload) => {
+    var user = await AuthService.getUser()
+    const token = user.access_token
+    const submitActionPayload = {
+      "previousTxId": id ? id : process.env.REACT_APP_SICCAR_BLUEPRINT_TX_ID,
+      "blueprintId": process.env.REACT_APP_SICCAR_BLUEPRINT_TX_ID,
+      "walletAddress": process.env.REACT_APP_SICCAR_WALLET_ADDRESS,
+      "registerId": process.env.REACT_APP_SICCAR_REGISTER_ID,
+      "data": payload
+    }
+    const defaultOptions = {
+      method: "Post",
+      headers: {
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(submitActionPayload)
+    }
+    var response = await fetch(`${process.env.REACT_APP_SICCAR_PUBLIC_URL}/api/Actions`,
+      defaultOptions)
+    if (response.status === 202) {
+      var json = await response.json()
+      console.log(json)
+      setActionSubmitted(true)
+    }
+    console.log(response)
+  };
+
+  if(actionSubmitted) return <h3>Action Submitted</h3>
   switch (action.id) {
     case 1:
-      return <ActionForm action={action} />
+      return <ActionForm action={action} submitActionCallback={submitAction} />
     case 2:
       //2nd action form goes here
       break

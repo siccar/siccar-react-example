@@ -7,14 +7,14 @@
   ],
   "participants": [
     {
-      "walletAddress": "ws1jj7sptu0tpatl9djd9jw8fc04waxexl9eyqvqh2y250796vekdagqxsqjc0",
+      "walletAddress": "ws1jle65qnan70zm4jeuxtvqk9vf3rwaqlzvhmlg5949jmry4g9r376sca3nhv",
       "name": "Sender",
       "organisation": "Applicant",
       "id": "3e380f95-1fcb-4ec5-9fed-2643da291c1c",
       "useStealthAddress": false
     },
     {
-      "walletAddress": "ws1jksgpmhe8vcxhfx5ej4fhwyz7e4zzp4zw6er2russ4kwakzmt72eskqp38c",
+      "walletAddress": "ws1jle65qnan70zm4jeuxtvqk9vf3rwaqlzvhmlg5949jmry4g9r376sca3nhv",
       "name": "Recipient",
       "organisation": "Org",
       "id": "9f43103d-5e5e-4ec6-9cdd-c3750af835d8",

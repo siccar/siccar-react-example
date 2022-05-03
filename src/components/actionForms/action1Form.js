@@ -1,17 +1,17 @@
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../../providers/authProvider";
+import React, { useState } from "react";
 
 export const ActionForm = (props) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [actionCondition, setActionCondition] = useState("false");
+  const [actioncondition, setActionCondition] = useState("false");
   const {action } = props;
-  const formSubmit = (event) => {
+  const formSubmit = async (event) => {
     event.preventDefault();
     // We will change this to submit the payload data.. First we need to update the submit enpoint to only take the payload and supporting data.
     console.log(name)
     console.log(surname)
-    console.log(actionCondition)
+    console.log(actioncondition)
+    props.submitActionCallback({name, surname, actioncondition});
   }
   return (
     <>
@@ -36,7 +36,7 @@ export const ActionForm = (props) => {
             <input
               type="radio"
               value={"true"}
-              checked={actionCondition === "true"}
+              checked={actioncondition === "true"}
               onChange={(e) => setActionCondition(e.target.value)}
             />
           </label>
@@ -44,7 +44,7 @@ export const ActionForm = (props) => {
             <input
               type="radio"
               value={"false"}
-              checked={actionCondition === "false"}
+              checked={actioncondition === "false"}
               onChange={(e) => setActionCondition(e.target.value)}
             />
           </label>
