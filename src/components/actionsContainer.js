@@ -30,17 +30,17 @@ export const ActionsContainer = () => {
    }, [AuthService]);
 
    const renderActions = actions.map(action => {
-      return (<Link to={`/action/${action.previousTxId}`}>
-         <li key={action.previousTxId}>Action Title: {action.title}</li>
+      return (<Link to={`/action/${action.previousTxId}`}  key={action.previousTxId}>
+         <li>Action Title: {action.title}</li>
       </Link>)
    })
 
    return (
       <>
-         <div>
-            <Link to="/start-blueprint"><button>Start New Blueprint</button></Link>
+         <div className="mb-2">
+            <Link to="/start-blueprint"><button className="btn btn-primary">Start New Blueprint</button></Link>
          </div>
-         {actions.length === 0 ? <h2>No Actions Availiable</h2> : <ul>{renderActions}</ul>}
+         {actions.length === 0 ? <div className="alert alert-warning" role="alert">No Actions Availiable</div> : <div><hr/><ul>{renderActions}</ul></div>}
       </>
    );
 };

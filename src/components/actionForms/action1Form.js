@@ -15,43 +15,56 @@ export const ActionForm = (props) => {
   }
   return (
     <>
-      <h2>{action.title}</h2>
+      <h1 className="mb-4">{action.title}</h1>
       <form onSubmit={formSubmit}>
-        <label>First Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label>Surname:
-          <input
-            type="text"
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-          />
-        </label>
-        <label> Go to next Action?
-          <label>Yes
+        <div className="mb-3">
+          <label className="w-100 fw-bold">First Name:
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="form-control"
+            />
+          </label>
+        </div>
+        <div className="mb-3">
+          <label className="w-100 fw-bold">Surname:
+            <input
+              type="text"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+              className="form-control"
+            />
+          </label>
+        </div>
+        <div className="mb-3">
+          <p className=" fw-bold"> Go to next Action?</p>
+        </div>
+        <div className="form-check">
             <input
               type="radio"
               value={"true"}
               checked={actioncondition === "true"}
               onChange={(e) => setActionCondition(e.target.value)}
+              className="form-check-input"
+              id="yes"
             />
-          </label>
-          <label>No
+            <label className="form-check-label" htmlFor="yes">Yes</label>
+          </div>
+          <div className="form-check">
             <input
               type="radio"
               value={"false"}
               checked={actioncondition === "false"}
               onChange={(e) => setActionCondition(e.target.value)}
+              className="form-check-input"
+              id="no"
             />
-          </label>
-        </label>
-        <button className="btn btn-default" type="submit">
-          Submit
-        </button>
+            <label className="form-check-label" htmlFor="no">No</label>
+          </div>
+          <button className="btn btn-primary mt-3" type="submit">
+            Submit
+          </button>
       </form>
     </>
   )

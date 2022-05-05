@@ -1,4 +1,3 @@
-import './App.css';
 import React, { Component } from "react";
 import { AuthProvider } from "./providers/authProvider";
 import { BrowserRouter } from "react-router-dom";

@@ -23,32 +23,37 @@ export const ActionForm2 = (props) => {
 
   const renderForm = () => (
     <>
-      <h2>{action.title}</h2>
+      <h1>{action.title}</h1>
       <form onSubmit={formSubmit}>
-        <label> Is previous action valid?
+      <div><p className="fw-bold">Is previous action valid?</p></div>
+      <div className="form-check">
           <label>Yes
             <input
               type="radio"
               value={"true"}
               checked={validate === "true"}
               onChange={(e) => setValidate(e.target.value)}
+              className="form-check-input"
             />
           </label>
+        </div>
+        <div className="form-check">
           <label>No
             <input
               type="radio"
               value={"false"}
               checked={validate === "false"}
               onChange={(e) => setValidate(e.target.value)}
+              className="form-check-input"
             />
           </label>
-        </label>
-        <button className="btn btn-default" type="submit">
+        </div>
+        <button className="btn btn-primary mt-3" type="submit">
           Submit
         </button>
       </form>
-      <section>
-        <label>Previous Data:</label>
+      <section className="mt-3">
+        <p className="fw-bold">Previous Data:</p>
         <ul>
           {renderPreviousActionData()}
         </ul>
