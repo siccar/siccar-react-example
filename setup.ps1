@@ -24,13 +24,13 @@ catch [Microsoft.PowerShell.Commands.HttpResponseException] {
   }
   else {
     Write-Host $_
-    Write-Warning -Message 'Siccar platform returned error http response' 
+    Write-Error -Message 'Siccar platform returned error http response' 
   }
 
 }
 catch {
   Write-Host $_
-  Write-Warning -Message 'An Error occured creating the sender wallet.'
+  Write-Error -Message 'An Error occured creating the sender wallet.'
 }
 
 try {
@@ -46,40 +46,41 @@ catch [Microsoft.PowerShell.Commands.HttpResponseException] {
   }
   else {
     Write-Host $_
-    Write-Warning -Message 'Siccar platform returned error http response' 
+    Write-Error -Message 'Siccar platform returned error http response' 
   }
 
 }
 catch {
   Write-Host $_
-  Write-Warning -Message 'An Error occured creating the recipient wallet.'
+  Write-Error -Message 'An Error occured creating the recipient wallet.'
 }
 
 Write-Output($wallet2Request)
 # Write Publish blueprint requests
 
 try{
-  $blueprintRequest = Invoke-WebRequest $siccarUri/api/Blueprints/walletAddress/$registerId/publish `
+  $blueprintRequest = Invoke-WebRequest $siccarUri/api/Blueprints/$walletAddress/$registerId/publish `
     -Method 'POST' `
     -ContentType 'application/json; charset=utf-8' `
-    -Body $pathToBlueprint `
+    -Body @([io.file]::ReadAllText($pathToBlueprint)) `
     -Headers @{'Authorization' = 'Bearer ' + $token }
   
-  Write-Output($blueprintRequest)
+  $content = $blueprintRequest.Content | ConvertFrom-Json
+  Write-Output("Blueprint was published with transaction id: " + $content.txId)
+  Write-Output("Please paste this transaction id into the react environment variables.")
 }
 catch [Microsoft.PowerShell.Commands.HttpResponseException] {
   Write-Host $_
   if ($_.ErrorDetails -like "*400*") {
-    Write-Warning -Message 'Bad Request'
+    Write-Warning -Message 'Invalid bluerprint.'
   }
   else {
     Write-Host $_
-    Write-Warning -Message 'Siccar platform returned error http response' 
+    Write-Error -Message 'Siccar platform returned error http response' 
   }
-
 }
 catch {
   Write-Host $_
-  Write-Warning -Message 'An Error occured creating the recipient wallet.'
+  Write-Error -Message 'An Error occured creating the recipient wallet.'
 }
 
