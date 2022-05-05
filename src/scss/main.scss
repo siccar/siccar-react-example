@@ -1,0 +1,17 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "_custom.scss";
+
+html, body{
+    font-family: 'Roboto', sans-serif;
+    margin: 0.2em;
+    padding: 0.2em;
+    font-size: $basefontsize;
+}
+
+h1{
+    font-size: 2em
+}
+
+h2{
+    font-size: 1.8em
+}
