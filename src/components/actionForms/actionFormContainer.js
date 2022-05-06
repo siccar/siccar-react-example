@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../../providers/authProvider";
 import { ActionForm } from "./action1Form";
 import { ActionForm2 } from "./action2Form";
@@ -65,13 +65,15 @@ export const ActionFormContainer = (params) => {
     console.log(response)
   };
 
-  if(actionSubmitted) return <h3>Action Submitted</h3>
+  if(actionSubmitted) return <div>
+      <div className="alert alert-info" role="alert"><span className="fw-bold">{action.title}</span> has been submitted</div>
+      <div><Link to="/actions"><button className="btn btn-primary">Go back</button></Link></div>
+    </div>
   switch (action.id) {
     case 1:
       return <ActionForm action={action} submitActionCallback={submitAction} />
     case 2:
       return <ActionForm2 action={action} submitActionCallback={submitAction} />
-
     default:
       return <h3>No form exists for action {action.id}</h3>
   }
