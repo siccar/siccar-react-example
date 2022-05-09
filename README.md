@@ -2,6 +2,56 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Pre-requisites
+
+### Platform
+
+You will need to have access to an installation of the platform and have a tenant and identity provider setup for federated login via the TenantService. Please see platform documentation for deployments and configuration.
+
+### Identity server configuration
+
+Client configuration must exist for the react app in identity server. It is required to allow the react app to perform a OAuth2 auth code flow for the user.
+
+The configuration should be setup as follows.
+
+```c#
+{
+  ClientId = "siccar-react-example",
+  AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+  RequireClientSecret = false,
+  RedirectUris = { "http://localhost:3000/authentication/callback" },
+  PostLogoutRedirectUris = { "http://localhost:3000/logout-callback" },
+  AllowedCorsOrigins = new List<string>{ "http://localhost:3000"},
+  AllowedScopes = new List<string>
+    {
+        IdentityServerConstants.StandardScopes.OpenId,
+        IdentityServerConstants.StandardScopes.Profile
+    }
+}
+````
+
+### Register
+
+A register must already exist on the platform and your user must have access to that register.
+
+### Environment Variables
+
+A .env file is located in the root of this project.
+
+```js
+{
+  REACT_APP_AUTH_URL = "<siccarUrl>"
+  REACT_APP_PUBLIC_URL = "http://localhost:3000"
+  REACT_APP_IDENTITY_CLIENT_ID = "siccar-react-example"
+  REACT_APP_REDIRECT_URL = "http://localhost:3000/authentication/callback"
+  REACT_APP_LOGOFF_REDIRECT_URL = "http://localhost:3000/logout-callback"
+  REACT_APP_SICCAR_PUBLIC_URL = "https://localhost:8443"
+  REACT_APP_SICCAR_REGISTER_ID = "40daacacf4ef407cb5c4b9b7d0e7fe36"
+  REACT_APP_SICCAR_BLUEPRINT_TX_ID = "a4b66ccf2df9247d5730a7ee4e2ce4591efbd4d3bb514dcb8152fb303c7516cf"
+  REACT_APP_SICCAR_WALLET_ADDRESS = "ws1jfk5jwvqvpnqr2nxaxlwq76falqymmz29q4rar3x05xkjzpqqqp2qcv08xa"
+}
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -10,6 +60,26 @@ In the project directory, you can run:
 
 This will install of the required dependecies for the react app.
 
+### `setup.ps1`
+
+Using powershell 7.2+, execute the setup.ps1 powershell script. You will need to genereate an access token for the platform. This can be done via our postman requests.
+Run the script as below pasting in the access token as below.
+
+`./setup.ps1 -token <access token> -siccarUri <siccarUri> -registerId <registerId>`
+
+- -token : A JWT access token supplied by the Platforms identity server. (required)
+- -siccarUri : The target url of the siccar platform. Default value is "https://localhost:8443" (optional);
+- -registerId : The target register id to publish the blueprint on. Default value is "40daacacf4ef407cb5c4b9b7d0e7fe36" (optional);
+
+This will generate the wallets utilised by the blueprint and then publish the blueprint to the target register id. The output of the script is a blueprint transaction id.
+This must be pasted into the .env file...
+
+`
+REACT_APP_SICCAR_BLUEPRINT_TX_ID = "<blueprint transaction id>"
+`
+
+Note: This script must be run to successfully use this react example.
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -17,58 +87,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
