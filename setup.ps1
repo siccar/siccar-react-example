@@ -7,18 +7,21 @@ param(
 $walletAddress = "ws1jfk5jwvqvpnqr2nxaxlwq76falqymmz29q4rar3x05xkjzpqqqp2qcv08xa"
 $pathToBlueprint = "./src/data/blueprint.json"
 
+Write-Output("Siccar Platform Url: ${siccarUri}")
+
 # Write Create wallet requests 
 try {
-  $wallet1Request = Invoke-WebRequest $siccarUri/api/Wallets `
+   Invoke-WebRequest $siccarUri/api/Wallets `
     -ErrorVariable $walletError1 `
     -ErrorAction SilentlyContinue `
     -Method 'POST' `
     -ContentType 'application/json; charset=utf-8' `
     -Body '{"name": "Sender", "mnemonic": "happy husband link guess know phrase tennis circle sick climb mail daring borrow observe give boss belt eight yard merit attend warfare awkward suspect"}' `
     -Headers @{'Authorization' = 'Bearer ' + $token }
+
+    Write-Output("Sender wallet created successfully.")
 }
 catch [Microsoft.PowerShell.Commands.HttpResponseException] {
-  $er = $_.ErrorDetails | Select-Object -ExpandProperty Message
   if ($_.ErrorDetails -like "*400*") {
     Write-Warning -Message 'Wallet already exists.'
   }
@@ -34,11 +37,13 @@ catch {
 }
 
 try {
-  $wallet2Request = Invoke-WebRequest $siccarUri/api/Wallets -ErrorVariable $walletError2  -ErrorAction SilentlyContinue `
+  Invoke-WebRequest $siccarUri/api/Wallets -ErrorVariable $walletError2  -ErrorAction SilentlyContinue `
     -Method 'POST' `
     -ContentType 'application/json; charset=utf-8' `
     -Body '{"name": "Recipient", "mnemonic": "idle human educate sibling hospital stick hover make surface infant climb wool broom range review nation vivid teach item cry wagon book tube keep"}' `
     -Headers @{'Authorization' = 'Bearer ' + $token }
+
+    Write-Output("Recipient wallet created successfully.")
 }
 catch [Microsoft.PowerShell.Commands.HttpResponseException] {
   if ($_.ErrorDetails -like "*400*") {
@@ -55,7 +60,6 @@ catch {
   Write-Error -Message 'An Error occured creating the recipient wallet.'
 }
 
-Write-Output($wallet2Request)
 # Write Publish blueprint requests
 
 try{
