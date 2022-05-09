@@ -78,7 +78,9 @@ This must be pasted into the .env file...
 REACT_APP_SICCAR_BLUEPRINT_TX_ID = "<blueprint transaction id>"
 `
 
-Note: This script must be run to successfully use this react example.
+**Note: This script must be run to successfully use this react example.**
+
+**Note: You must be the owner, or at least a delegate, of the created wallets to be able to access them.**
 
 ### `npm start`
 
@@ -87,3 +89,24 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+## Running the demo
+
+1. After starting the react app you will be redirected to the landing public page.
+2. Navigate in the browser to <http://localhost:3000/actions>
+3. Click "Start new blueprint"
+4. Enter your details.
+5. Setting "Go to next Action" to "No" ends the workflow immediately and setting to "Yes" will create a pending action for the next participant in the blueprint.
+6. Set the action condition to "Yes".
+7. Change the wallet address in the .env file to "ws1jfk5jwvqvpnqr2nxaxlwq76falqymmz29q4rar3x05xkjzpqqqp2qcv08xa" this is the wallet address for the second participant.
+8. Restart the react app with the new variables.
+9. Navigate in the browser to <http://localhost:3000/actions>
+10. You will see a pending action.
+11. Click on the action and carry out the last action.
+
+## Troubleshooting
+
+- "No form Exists for action". This could mean you have not copied the blueprint transaction id after running the setup script.
+- The list of actions is empty. "No actions available." This is correct when first starting the app.
+- The list of actions is empty after submiting the first step. You need to set the "Go to next action" field to "Yes".
+- The list of actions is empty after submiting the first step. You need to set the wallet address to the wallet address of the participant in the blueprint.
