@@ -7,7 +7,7 @@ export const IDENTITY_CONFIG = {
     loadUserInfo: true, //(boolean, default: true): Flag to control if additional identity data is loaded from the user info endpoint in order to populate the user's profile.
     post_logout_redirect_uri: process.env.REACT_APP_LOGOFF_REDIRECT_URL, // (string): The OIDC post-logout redirect URI.
     response_type: "code", //(string, default: 'id_token'): The type of response desired from the OIDC provider.
-    scope: "openid profile wallet_admin", //(string, default: 'openid'): The scope being requested from the OIDC provider.
+    scope: "openid profile wallet.admin", //(string, default: 'openid'): The scope being requested from the OIDC provider.
     silent_redirect_uri: 'http://localhost:3000/authentication/silent-callback', // Optional activate silent-signin that use cookies between OIDC server and client javascript to restore the session
 };
 
