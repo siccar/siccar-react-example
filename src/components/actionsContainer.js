@@ -47,23 +47,42 @@ export const ActionsContainer = () => {
    }, [AuthService]);
 
    useEffect(() => {
+      const fetchActionById = async (actionId) => {
+         var user = await AuthService.getUser()
+         const token = user.access_token
+         const defaultOptions = {
+            headers: {
+               'Authorization': "Bearer " + token
+            },
+         }
+         var response = await fetch(`${process.env.REACT_APP_SICCAR_PUBLIC_URL}/api/Actions/${process.env.REACT_APP_SICCAR_WALLET_ADDRESS}/${process.env.REACT_APP_SICCAR_REGISTER_ID}/${actionId}`,
+            defaultOptions)
+         if (response.status === 200) {
+            var json = await response.json()
+            console.log(json)
+            const updatedActions = [...latestActions.current];
+            updatedActions.push(json);
+            setActions(updatedActions);
+         }
+         console.log(response)
+      };
+
       if (connection) {
          connection.start()
             .then(result => {
                console.log('Connected!');
 
-               connection.on('ReceiveAction', action => {
-                  const updatedActions = [...latestActions.current];
-                  console.log(action)
-                  console.log("**********Action Received*********")
-                  //  updatedActions.push(action);
+               connection.on('ReceiveAction', transactionMetaData => {
+                  console.log(transactionMetaData)
+                  console.log("**********Data Received*********")
 
-                  //  setActions(updatedActions);
+                  fetchActionById(transactionMetaData.Id)
+
                });
             })
             .catch(e => console.log('Connection failed: ', e));
       }
-   }, [connection]);
+   }, [connection, AuthService]);
 
    const renderActions = actions.map(action => {
       return (<Link to={`/action/${action.previousTxId}`} key={action.previousTxId}>
