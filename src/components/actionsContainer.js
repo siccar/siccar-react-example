@@ -72,11 +72,8 @@ export const ActionsContainer = () => {
             .then(result => {
                console.log('Connected!');
 
-               connection.on('ReceiveAction', transactionMetaData => {
-                  console.log(transactionMetaData)
-                  console.log("**********Data Received*********")
-
-                  fetchActionById(transactionMetaData.Id)
+               connection.on('ReceiveAction', transactionConfirmedPayload => {
+                  fetchActionById(transactionConfirmedPayload.transactionId)
 
                });
             })
